@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+
+body,
+html {
+	font-size: 16px;
+	background-color: theme('colors.gray.100');
+	color: theme('colors.gray.600');
+	// font-family: "Tajawal", sans-serif;
+	font-family: 'Amiri', serif;
+}
+
+p,
+button {
+	margin: 0;
+	padding: 0;
+}
+
+a:active,
+a:focus,
+button:active,
+button:focus {
+	outline: 0;
+	outline-style: none;
+	-moz-outline-style: none;
+}
+
+input {
+	text-indent: 1px;
+}

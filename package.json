@@ -1,0 +1,25 @@
+{
+    "name": "lms",
+    "version": "0.1.0",
+    "scripts": {
+        "prepare:app": "cd resources/app && yarn install",
+        "serve:app": "cd resources/app && yarn run serve",
+        "build:app": "cd resources/app && yarn run build",
+        "lint:app": "cd resources/app && yarn run lint",
+        "test:app": "cd resources/app && yarn run test:unit",
+        "build-multiselect-field": "cd nova-components/MultiselectField && npm run dev",
+        "build-multiselect-field-prod": "cd nova-components/MultiselectField && npm run prod"
+    },
+    "repository": "https://github.com/zeidanbm/laravel-nova-lms.git",
+    "author": "Bilal Z.",
+    "devDependencies": {
+        "pre-push": "^0.1.1"
+    },
+    "pre-push": {
+        "run": [
+            "lint:app",
+            "build:app"
+        ]
+    },
+    "dependencies": []
+}

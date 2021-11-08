@@ -1,0 +1,277 @@
+{
+	"settings": {
+		"number_of_shards": 3,
+		"number_of_replicas": 1,
+		"max_ngram_diff": 3,
+		"similarity": {
+			"my_bm25": {
+				"type": "BM25",
+				"b": 0.236
+			}
+		},
+		"analysis": {
+			"filter": {
+				"unique_tokens": {
+					"type": "unique",
+					"only_on_same_position": true
+				},
+				"arabic_stop": {
+					"type": "stop",
+					"stopwords": "_arabic_"
+				},
+				"arabic_keywords": {
+					"type": "keyword_marker",
+					"keywords": []
+				},
+				"arabic_stemmer": {
+					"type": "stemmer",
+					"language": "arabic"
+				},
+				"arabic_ngram": {
+					"type": "ngram",
+					"min_gram": 5,
+					"max_gram": 8
+				},
+				"edgengram_filter": {
+					"type": "edge_ngram",
+					"min_gram": 1,
+					"max_gram": 30
+				}
+			},
+			"normalizer": {
+				"arabic_normalizer": {
+					"type": "custom",
+					"char_filter": [],
+					"filter": [
+						"arabic_normalization"
+					]
+				}
+			},
+			"analyzer": {
+				"rebuilt_arabic": {
+					"type": "arabic",
+					"tokenizer": "whitespace",
+					"filter": [
+						"arabic_stop",
+						"arabic_normalization",
+						"arabic_keywords",
+						"arabic_stemmer"
+					]
+				},
+				"arabic_normalized": {
+					"type": "custom",
+					"tokenizer": "whitespace",
+					"filter": [
+						"arabic_normalization",
+						"arabic_keywords"
+					]
+				},
+				"autocomplete_arabic": {
+					"type": "custom",
+					"tokenizer": "whitespace",
+					"filter": [
+						"arabic_normalization",
+						"arabic_keywords",
+						"edgengram_filter"
+					]
+				},
+				"arabic_ngram": {
+					"tokenizer": "whitespace",
+					"filter": [
+						"arabic_normalization",
+						"arabic_keywords",
+						"arabic_ngram",
+						"reverse",
+						"arabic_ngram",
+						"reverse",
+						"unique_tokens"
+					]
+				},
+				"arabic_stemmed": {
+					"tokenizer": "whitespace",
+					"filter": [
+						"arabic_normalization",
+						"arabic_keywords",
+						"arabic_stemmer"
+					]
+				}
+			}
+		}
+	},
+	"mappings": {
+		"dynamic": false,
+		"properties": {
+			"suggest": {
+				"type": "completion",
+				"analyzer": "arabic_normalized",
+				"search_analyzer": "arabic_normalized"
+			},
+			"model_id": {
+				"type": "integer"
+			},
+			"type": {
+				"type": "keyword"
+			},
+			"format": {
+				"type": "keyword"
+			},
+			"series_id": {
+				"type": "integer"
+			},
+			"title": {
+				"type": "keyword",
+				"normalizer": "arabic_normalizer",
+				"fields": {
+					"text": {
+						"type": "text",
+						"analyzer": "arabic_normalized",
+						"search_analyzer": "arabic_normalized"
+					},
+					"stemmed": {
+						"type": "text",
+						"analyzer": "arabic_stemmed",
+						"search_analyzer": "arabic_stemmed",
+						"term_vector": "with_positions_offsets_payloads",
+						"similarity": "my_bm25"
+					}
+				}
+			},
+			"sub_title": {
+				"type": "keyword",
+				"normalizer": "arabic_normalizer",
+				"fields": {
+					"text": {
+						"type": "text",
+						"analyzer": "arabic_normalized",
+						"search_analyzer": "arabic_normalized"
+					},
+					"stemmed": {
+						"type": "text",
+						"analyzer": "arabic_stemmed",
+						"search_analyzer": "arabic_stemmed",
+						"term_vector": "with_positions_offsets_payloads",
+						"similarity": "my_bm25"
+					}
+				}
+			},
+			"series_title": {
+				"type": "keyword",
+				"normalizer": "arabic_normalizer",
+				"fields": {
+					"text": {
+						"type": "text",
+						"analyzer": "arabic_normalized",
+						"search_analyzer": "arabic_normalized"
+					},
+					"stemmed": {
+						"type": "text",
+						"analyzer": "arabic_stemmed",
+						"search_analyzer": "arabic_stemmed",
+						"term_vector": "with_positions_offsets_payloads",
+						"similarity": "my_bm25"
+					}
+				}
+			},
+			"topic": {
+				"type": "keyword",
+				"normalizer": "arabic_normalizer",
+				"fields": {
+					"text": {
+						"type": "text",
+						"analyzer": "arabic_normalized",
+						"search_analyzer": "arabic_normalized"
+					}
+				}
+			},
+			"subtopic": {
+				"type": "keyword",
+				"normalizer": "arabic_normalizer",
+				"fields": {
+					"text": {
+						"type": "text",
+						"analyzer": "arabic_normalized",
+						"search_analyzer": "arabic_normalized"
+					}
+				}
+			},
+			"authors": {
+				"type": "keyword",
+				"normalizer": "arabic_normalizer",
+				"fields": {
+					"text": {
+						"type": "text",
+						"analyzer": "arabic_normalized",
+						"search_analyzer": "arabic_normalized"
+					}
+				}
+			},
+			"publishers": {
+				"type": "keyword",
+				"normalizer": "arabic_normalizer",
+				"fields": {
+					"text": {
+						"type": "text",
+						"analyzer": "arabic_normalized",
+						"search_analyzer": "arabic_normalized"
+					}
+				}
+			},
+			"tags": {
+				"type": "keyword",
+				"normalizer": "arabic_normalizer",
+				"fields": {
+					"text": {
+						"type": "text",
+						"analyzer": "arabic_normalized",
+						"search_analyzer": "arabic_normalized"
+					},
+					"stemmed": {
+						"type": "text",
+						"analyzer": "arabic_stemmed",
+						"search_analyzer": "arabic_stemmed",
+						"term_vector": "with_positions_offsets_payloads",
+						"similarity": "my_bm25"
+					}
+				}
+			},
+			"body": {
+				"type": "text",
+				"analyzer": "rebuilt_arabic",
+				"search_analyzer": "arabic_normalized",
+				"term_vector": "with_positions_offsets_payloads"
+			},
+			"details": {
+				"type": "object",
+				"enabled": false
+			},
+			"publication_ids": {
+				"type": "integer",
+				"index": false
+			},
+			"cover_thumbnail": {
+				"type": "text",
+				"index": false
+			},
+			"cover_medium": {
+				"type": "text",
+				"index": false
+			},
+			"cover_large": {
+				"type": "text",
+				"index": false
+			},
+			"status": {
+				"type": "keyword",
+				"ignore_above": 256
+			},
+			"slug": {
+				"type": "text",
+				"index": false
+			},
+			"created_at": {
+				"type": "date",
+				"format": "yyyy-MM-dd HH:mm:ss"
+			}
+		}
+	}
+}

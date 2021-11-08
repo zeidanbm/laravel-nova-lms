@@ -1,0 +1,9 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+/** Import theme styles */
+@import "common/global";
+@import "partials/header";
