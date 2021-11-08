@@ -14,8 +14,8 @@ You will need php 7.1+, composer, node 12+, npm/yarn, git and mysql installed on
 -   cd into resources/app & run `yarn install`
 
 If you want to have demo users created, you will need to run `php artisan db:seed --class=UserTableSeeder` which will generate 3 users with admin user credentials below.
-Email: admin@lms.test
-password: 123657
+- Email: admin@lms.test
+- password: 123657
 
 The Admin panel of nova can be accessed from /admin
 
@@ -88,9 +88,6 @@ To index all books into catalogs
 
 To index all periodics into catalogs
 `php artisan laravel-elasticsearch:index:indexing catalogs App\\Models\\Periodic --relations='Publishers,Sources,Cover'`
-
-To index all amels into catalogs
-`php artisan laravel-elasticsearch:index:indexing catalogs App\\Models\\Amel`
 
 To index all quotes into catalogs
 `php artisan laravel-elasticsearch:index:indexing catalogs App\\Models\\Quote --relations='Author'`
